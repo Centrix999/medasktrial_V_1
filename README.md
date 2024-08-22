@@ -1,7 +1,7 @@
 # medasktrial_V_1
 
 
-# MedAskTrial
+
 
 ## Project Title: MedAskTrial - Document Chat Application
 
