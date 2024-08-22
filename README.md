@@ -117,46 +117,6 @@
 5. **Export conversations**:
    - Users can export conversations to DOCX, JSON, or PPTX formats with optional watermarking.
 
-### File Structure
-
-
-### File Structure
-
-
-tellmepdf/
-│
-├── app/ # App for chat interface and document handling
-│ ├── migrations/ # Database migrations
-│ ├── models.py # Django models
-│ ├── views.py # Views for handling requests
-│ ├── forms.py # Forms for user input
-│ ├── urls.py # URL routing for the app
-│ └── ... # Other files
-│
-├── templates/ # Template files for rendering HTML
-│ ├── admin/ # Admin interface templates
-│ ├── app/ # Application-specific templates
-│ └── user/ # User-specific templates
-│
-├── static/ # Static files (CSS, JS, media, plugins)
-│ ├── css/
-│ ├── js/
-│ ├── media/
-│ └── plugins/
-│
-├── media/ # Media files uploaded by users
-│
-├── tellmepdf/ # Project settings and configuration
-│ ├── settings.py # Django settings
-│ ├── asgi.py # ASGI application configuration
-│ ├── urls.py # Project URL routing
-│ └── wsgi.py # WSGI application configuration
-│
-├── manage.py # Django management script
-├── requirements.txt # Project dependencies
-├── .env # Environment variables
-├── README.md # Project documentation
-└── ... # Additional files
 
 ### Technologies
 
