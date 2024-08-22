@@ -1,0 +1,209 @@
+/* Add loader styles */
+.loader-container {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 9999;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logout_btn {
+  width: 70px;
+  border: 27px;
+  border-radius: 10px;
+}
+
+.imageoverlay:hover .image {
+  opacity: 0.2;
+}
+
+.middle {
+  transition: 0.5s ease;
+  opacity: 0.1;
+  position: absolute;
+  top: 15%;
+  left: 86%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.imageoverlay:hover .middle {
+  opacity: 1;
+}
+
+.ml-50 {
+  margin-left: 50% !important;
+}
+
+.prompt-button {
+  background-color: transparent;
+  border: 2px solid rgb(50, 183, 192);
+  border-radius: 10px;
+  color: #087f8f; /* Text color */
+  padding: 10px 20px; /* Adjust padding as needed */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  cursor: pointer; /* Show pointer cursor on hover */
+  margin-bottom: 5px;
+}
+
+.prompt-button:hover {
+  background-color: #6fdeec;
+  color: black; /* Change text color on hover */
+}
+
+.ml-13-custom {
+  margin-left: 13% !important;
+  color: #36454f !important;
+}
+
+.list_doc_card {
+  min-height: 420px !important;
+}
+
+.symbol-img {
+  margin-top: -24px !important;
+}
+
+.list-img {
+  /* height: 150px !important;
+  width: 240px !important; */
+
+  margin: 0 auto;
+}
+
+/* For Desktop View */
+@media screen and (min-width: 1024px) {
+
+}
+
+/* For Tablet View */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  .list-img {
+    /* height: 96px !important;
+    width: 130px !important; */
+
+    margin: 0 auto;
+  }
+  #container_flipbox {
+    min-height: 1500px;
+  }
+}
+
+/* For Mobile Portrait View */
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  .list-img {
+    /* height: 150px !important;
+    width: 279px !important; */
+    margin-left: -22px;
+    margin-top: -19px;
+  }
+  #container_flipbox {
+    min-height: 800px;
+  }
+}
+
+/* For Mobile Landscape View */
+@media screen and (max-device-width: 640px) and (orientation: landscape) {
+  .list-img {
+    height: 150px !important;
+    width: 279px !important;
+    margin-left: -22px;
+    margin-top: -19px;
+  }
+}
+
+/* For Mobile Phones Portrait or Landscape View */
+@media screen and (max-device-width: 640px) {
+  .list-img {
+    /* height: 150px !important;
+    width: 350px !important; */
+    margin: 0 auto;
+  }
+  #container_flipbox {
+    min-height: 800px;
+  }
+}
+
+/* For iPhone 4 Portrait or Landscape View */
+/* @media screen and (min-device-width: 320px)  {
+  .list-img {
+    height: 150px !important;
+    width: 290px !important;
+    margin: 0 auto;
+  }
+} */
+
+/* For iPhone 5 Portrait or Landscape View */
+@media (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) {
+  .list-img {
+    height: 150px !important;
+    width: 279px !important;
+    margin-left: -22px;
+    margin-top: -19px;
+  }
+  #container_flipbox {
+    min-height: 800px;
+  }
+}
+
+/* For iPhone 6 and 6 plus Portrait or Landscape View */
+@media (min-device-height: 667px) and (min-device-width: 375px) and (-webkit-min-device-pixel-ratio: 3) {
+  .list-img {
+    height: 150px !important;
+    width: 350px !important;
+    margin: 0 auto;
+  }
+  #container_flipbox {
+    min-height: 800px;
+  }
+}
+
+@media (max-width: 550px) {
+  #container_flipbox {
+    min-height: 800px;
+  }
+}
+.open-win {
+  position: absolute;
+  top: 3px;
+  right: 19px;
+  font-size: 14px;
+  color: red;
+  padding: 5px;
+}
