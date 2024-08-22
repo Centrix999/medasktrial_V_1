@@ -36,8 +36,8 @@
 
 1. **Clone the repository**:
   
-   git clone 
-   cd medasktrial
+   git clone https://github.com/Centrix999/medasktrial_V_1.git
+   cd medasktrial_V_1_main
 
 
 2. **Create and activate a virtual environment**:
@@ -125,33 +125,33 @@
 
 tellmepdf/
 │
-├── app/                  # App for chat interface and document handling
-│   ├── migrations/       # Django migrations
-│   ├── models.py         # Models for documents, sessions, and conversation data
-│   ├── views.py          # Views for handling chat interactions and document uploads
+├── app/# App for chat interface and document handling
+│   ├── migrations
+│   ├── models.py
+│   ├── views.py
 │   ├── forms.py 
 │   ├── urls.py
-│   └──  ...              # Other files
-├── templates/            # HTML templates for the chat interface
-│   ├── admin/       
-│   ├── app/             
-│   └── user/  
-├── static/                # Static files (CSS, JS)
-│   ├── css/       
-│   ├── js/       
-│   ├── media/        
-│   └── plugins/             
-├── media/  
+│   └──  ... # Other files
+├── templates/
+│   ├── admin/
+│   ├── app/
+│   └── user/
+├── static/
+│   ├── css/
+│   ├── js/
+│   ├── media/
+│   └── plugins/
+├── media/
 ├── tellmepdf/
-│   ├── settings.py/       # Django migrations
-│   ├── asgi.py           
-│   ├── urls.py            # Django urls
-│   └── wsgi  
-├── manage.py             # Django management script
-├── requirements.txt      # Python dependencies
-├── .env                  # Environment variables
-├── README.md             # Project documentation
-└── ...                   # Other files and directories
+│   ├── settings.py/
+│   ├── asgi.py        
+│   ├── urls.py
+│   └── wsgi
+├── manage.py
+├── requirements.txt
+├── .env
+├── README.md
+└── ... 
 
 ### Technologies
 
@@ -162,10 +162,6 @@ tellmepdf/
 - **NLTK**: For text preprocessing and tokenization (stopword removal, stemming, and lemmatization).
 - **OpenAI GPT-4**: Used for generating responses based on document content.
 
-### Future Improvements
 
-- Improve chat response accuracy and contextual understanding.
-- Add support for additional file types and processing methods.
-- Implement more advanced session management and recovery features.
 
 
