@@ -1,0 +1,727 @@
+{% load static %}
+{% load widget_tweaks %}
+{% include 'user/common/chatheader.html' %}
+<div class="main-wrapper-flex">
+    <!--begin::Sidebar-->
+    <!-- <div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0"> -->
+    <!-- add prompt code here -->
+     <div class="chat-input">
+        <!--begin::Contacts-->
+        <div class="card card-flush" style="background-color: #f9f9f9 !important;">
+            <!--begin::Card header-->
+           <div class="card-header pt-7" id="kt_chat_contacts_header" style="background-color: #f9f9f9 !important;">
+                <p> <strong> Default Prompts noo: </strong> </p>             
+
+            </div>
+            <div class="separator separator-solid mb-7"></div>
+            <ul class="prompt-details">
+                {% if prompts %}
+                                           
+                <div class="d-flex flex-stack py-4" >
+                    <!--begin::Details-->
+                    <div class="d-block align-items-center ">
+                        <!--begin::Avatar-->
+                        {% for prompt in prompts %}
+                            <button class="prompt-button" onclick="handlePromptClick('{{ prompt.prompt_data }}')" style="text-align: left; ">{{ prompt.prompt_data }}</button>
+                        
+                            {% endfor %}
+                                                                        
+                    </div>
+                    <!--end::Details-->                                               
+                </div>
+               
+            {% else %}                                                
+            
+                <p style="margin-left:20px;">No default prompts available for this document.</p>
+            {% endif %}                                           
+                                         </ul>
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <!-- Display user's questions from the conversation history -->
+            <div class="chat-history">
+                <h2>Chat History</h2>
+                {% if chat_conversation %}
+                    {% for chat in chat_conversation %}
+                        <a style="color:black" href="{% url 'chat_interface' document.id %}?chat_id={{ chat.id }}&amp;thread_id={{ chat.thread_id }}">
+                            <div class="chat-record">
+                                {% comment %} <h3> created on :{{ chat.created_at }}</h3> {% endcomment %}
+                                
+                                <p style="margin-left:20px;">{{ chat.title }}</p>
+                                {% comment %} <div class="chat-messages">
+                                    {% for message in chat.messages %}
+                                        {% if message.source == 'user' %}
+                                            <div class="message {{ message.source }}">
+                                                {{ message.text|slice:":15" }}{% if message.text|length > 15 %}...{% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div> {% endcomment %}
+                            </div>
+                        </a>
+                        {% if specific_chat and specific_chat.id == chat.id %}
+                            <form method="post">
+                                {% csrf_token %}
+                                
+                                <input type="text" name="title" id="title_{{ chat.id }}" class="form-control input-field chatTxtField" chatId="{{ chat.id }}" value="{{chat.title}}" placeholder="Update chat name" >                            
+                                
+                                <input type="hidden" name="edit_title">
+                                <input type="hidden" name="chat_id" value="{{ chat.id }}" >
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p>No previous user questions found for this document.</p>
+                {% endif %}
+            </div>
+            
+            
+        </div>
+       
+
+      
+        <!--end::Card body-->
+    </div>
+   
+    <!--end::Contacts-->
+    <div id="kt_content_container" style="width:100%" class="">
+
+        <!--begin::Post-->
+        <div class="content container flex-row-fluid" id="kt_content" >
+            <!--begin::Layout-->
+
+            <!--end::Sidebar-->
+            <!--begin::Content-->
+            <div class="chat-block">
+                <div class="flx-bxgrid container ">
+                    
+                    <div class="wrapper-block"  >
+                       <div class="icon-block icon-block-sctm">
+                            <div class="icon">
+                                
+                                <?xml version="1.0" encoding="iso-8859-1"?>
+                                <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                <svg fill="#000000" height="14" width="11" version="1.1" id="Layer_1" 
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 330 330" xml:space="preserve">
+                                    <path id="XMLID_222_" d="M250.606,154.389l-150-149.996c-5.857-5.858-15.355-5.858-21.213,0.001
+                                                c-5.857,5.858-5.857,15.355,0.001,21.213l139.393,139.39L79.393,304.394c-5.857,5.858-5.857,15.355,0.001,21.213
+                                                C82.322,328.536,86.161,330,90,330s7.678-1.464,10.607-4.394l149.999-150.004c2.814-2.813,4.394-6.628,4.394-10.606
+                                                C255,161.018,253.42,157.202,250.606,154.389z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <a href="{% url 'user_dashboard' %}"><i class="bi bi-house-door-fill"></i></a>
+                        
+                        
+                    </div> 
+                    <!-- <a href="{% url 'user_dashboard' %}"><i class="bi bi-house-door-fill"></i></a> -->
+                    <!--begin::Title-->
+                    <!-- <h1 class="d-flex text-white fw-bold my-1 fs-3">Chat</h1> -->
+                   
+                    <div class="wrapper-block">
+                        
+                        <div class="dropdown">
+                            <div class="chatgpt-block">
+                                <b>
+                                <p class="dropbtn text-gray-900" id="myBtn"></p>
+                                Document Title : 
+                                {% if document.name|length > 15 %}
+                                    {{ document.name|slice:":15" }}...
+                                {% else %}
+                                    {{ document.name }}
+                                {% endif %}
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2" data-bs-toggle="modal" data-bs-target="#shareModal" class="share-button" style="cursor:pointer">
+                        <i class="fa-solid fa-share"></i>
+                    </div>   
+                   
+                   
+                    <div id="hiddenConversationData" style="display: none;">
+                        {{ conversation_messages|json_script:"conversation_messages" }}
+                    </div>
+                    
+                    <form id="saveChatForm" method="post" action="{% url 'save_chat' %}">
+                        {% csrf_token %}
+                        <!-- Use a hidden input field to pass the data -->
+                        <input type="hidden" name="conversation_messages" id="conversationMessagesInput" value={{conversation_messages}} >
+                        <button type="submit" class="btn btn-primary">Save Chat</button>
+                    </form>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            // Copy the JSON data from the hidden div to the hidden input field
+                            var conversationData = document.getElementById('hiddenConversationData').textContent;
+                            document.getElementById('conversationMessagesInput').value = conversationData;
+                        });
+                        </script>
+
+                        {% comment %} <form id="newChatForm" method="post" action="{% url 'start_new_chat' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="conversation_messages" id="newConversationMessagesInput" value="{{ conversation_messages|escapejs }}">
+                            {{ thread_id }}----thread_id
+                            <input type="hidden" name="nti" id="newNtiInput" value="{{ thread_id }}">
+                            <button type="submit" class="btn btn-secondary">New Chat</button>
+                        </form> {% endcomment %}
+                        
+                   
+
+
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Export Chat
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="shareDropdown">
+                            <li><a href="{% url 'export_conversation_doc' %}" class="dropdown-item">Export to DOC</a></li>
+                            <li><a href="{% url 'export_conversation_pdf' %}" class="dropdown-item">Export to PDF</a></li>
+                            <li><a href="{% url 'export_conversation_ppt' %}" class="dropdown-item">Export to PPT</a></li>
+                            <li><a href="{% url 'export_conversation_json' %}" class="dropdown-item">Export to JSON</a></li>
+                            <li><a href="{% url 'export_conversation_audio' %}" class="dropdown-item">Export to Audio</a></li>
+
+                            
+                        </ul>
+                    </div>
+                    
+                    
+                    <!--end::Title-->
+                </div>
+
+            </div>
+             
+            <!--end::Title-->
+
+
+        </div>
+        <!--begin::Messenger-->
+        <div class="card" id="kt_chat_messenger">
+            <!--begin::Card header-->
+
+            <!--end::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body" id="kt_chat_messenger_body" style="min-height: 74vh; border-top:1px solid #9e9ea761">
+                <div class="loader-container" id="loader-container">
+                    <div class="loader"></div>
+                </div>
+                <!--begin::Messages-->
+                <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" id="chatting" data-kt-element="messages"
+                    data-kt-scroll="true" data-kt-scroll-activate="{default: true, lg: true, md:true}"
+                    data-kt-scroll-max-height="auto" data-kt-scroll-offset="5px" style="height:386px">
+                    {% for message in conversation_messages %}
+
+                    {% if message.source == 'assistant' %}
+                    <div class="d-flex justify-content-start mb-10">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column align-items-start">
+                            <!--begin::User-->
+                            <div class="d-flex align-items-center mb-2">
+                                <!--begin::Avatar-->
+                                <div class="symbol symbol-35px symbol-circle">
+                                    <img alt="Pic" src="{% static 'media/avatars/300-25.jpg' %}" />
+                                </div>
+                                <!--end::Avatar-->
+                                <!--begin::Details-->
+                                <div class="ms-3">
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1"
+                                        style="font-size: 16px;">AI</a>
+
+                                </div>
+                                <!--end::Details-->
+                            </div>
+                            <!--end::User-->
+                            <!--begin::Text-->
+                            <!-- <div class="p-5 rounded bg-light-info text-gray-900 fw-semibold mw-lg-1000px text-start" data-kt-element="message-text" style="font-size: 16px;">{{ message.text }} <a href="#" onclick="copyText(this)" class="copy-link"><i class="bi bi-clipboard"></i> Copy</a></div>
+                                         -->
+
+
+                            <!--begin::Text-->
+
+                            <div id="aiResponseText"
+                                class="p-5 rounded reponses_result text-gray-900 fw-semibold mw-lg-1000px text-start typing-effect"
+                                data-kt-element="message-text" style="font-size: 16px;">{{ message.text }}</div>
+                            <a href="#" onclick="copyText(this)" class="copy-link" style="display: none;">
+                                <i class="bi bi-clipboard"></i> 
+                            </a>
+                            
+                            <!--end::Text-->
+
+
+
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+
+                    {% elif message.source == 'user' %}
+
+                    <div id="user" class="d-flex justify-content-end mb-10 user">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column align-items-end">
+                            <!--begin::User-->
+                            <div class="d-flex align-items-center mb-2">
+                                <!--begin::Details-->
+                                <div class="me-3">
+                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1"
+                                        style="font-size: 16px;">You</a>
+                                </div>
+                                <!--end::Details-->
+                                <!--begin::Avatar-->
+                                <div class="symbol symbol-35px symbol-circle">
+                                    <img alt="Pic" src="{% static 'media/avatars/300-1.jpg' %} " />
+                                </div>
+                                <!--end::Avatar-->
+                            </div>
+                            <!--end::User-->
+                            <!--begin::Text-->
+                            <div class="p-5 rounded ask_ques_result text-gray-900 fw-semibold mw-lg-1000px text-start "
+                                data-kt-element="message-text" style="font-size: 16px;">{{ message.text}}</div>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Wrapper-->
+                    </div>
+
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+                <!--end::Messages-->
+            </div>
+            <!--end::Card body-->
+            <!--begin::Card footer-->
+            <div class="card-footer pt-4 container" id="kt_chat_messenger_footer">
+                <form method="POST" id="message-form">
+                    {% csrf_token %}
+                    
+                    <br>
+                    {% comment %} {{thread_id}}------------------thread id in form {% endcomment %}
+                    
+                    <!-- Existing form fields and buttons -->
+                    {% if messages %}
+                    <div class="alert alert-danger alert-dismissible fade show err_val" role="alert">
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+                    <div class="text-input">
+                        <button style="height:52px" type="submit" name="submit_action" value="clear" class="btn btn_send clear_chat">Clear Chat</button>
+                        <div class="text-area-wrapper">
+                            <textarea class="form-control resize-ta" data-kt-element="input" id="question" name="question" placeholder="Enter your question"></textarea>
+                            <span id="error" style="color:red"></span>
+                        </div>
+                        <input type="hidden" name="thread_id" id="thread_id" value={{thread_id}} >
+                        <button style="height:52px" class="btn btn_send btn_msg_send" id="submit" name="submit_action" value="submit">Ask Me Now!</button>
+   
+                    </div>
+                </form>
+                
+            </div>
+            <!--end::Card footer-->
+        </div>
+        <!--end::Messenger-->
+    </div>
+    <!--end::Content-->
+</div>
+<!--end::Layout-->
+</div>
+</div>
+<!--begin::Toolbar-->
+
+<!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Container-->
+
+
+
+<!--end::Post-->
+</div>
+</div>
+<!--end::Container-->
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shareModalLabel">Share Conversation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Share this conversation:</p>
+                <input type="text" class="form-control" id="shareUrlInput" value="{{ share_url }}" readonly>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+
+    </div> -->
+<!--end::Footer-->
+</div>
+<!--end::Wrapper-->
+</div>
+<!--end::Page-->
+</div>
+<!--end::Root-->
+</div>
+<!--end::Content-->
+</div>
+<!--end::Body-->
+
+</div>
+</div>
+
+<script>
+      function handlePromptClick(promptText) {
+            // Set the value of the input field to the prompt text
+            document.getElementById('question').value = promptText;
+            // alert(promptText)
+
+            // Simulate a click event on the "Tell Me" button
+            document.querySelector('button[value="submit"]').click();
+
+            // Prevent the default form submission behavior
+            // return false;
+        }
+
+
+
+    // Function to activate typing effect for the current response
+    function activateTypingEffectForCurrentResponse() {
+        // Get all AI response elements
+        var responseElements = document.querySelectorAll('.typing-effect');
+
+        // Iterate through each response element
+        responseElements.forEach(function (currentResponseElement, index) {
+            // Check if this is the last response element
+            if (index === responseElements.length - 1) {
+                // Add class to mark the element as active to prevent reactivation
+                currentResponseElement.classList.add('typing-effect-active');
+
+                // Get the text content of the response
+                var text = currentResponseElement.textContent.trim();
+
+                // Clear the response text content
+                currentResponseElement.textContent = '';
+
+                // Loop through each character of the response text
+                for (var i = 0; i < text.length; i++) {
+                    // Use setTimeout to add each character with a delay
+                    setTimeout(function (i) {
+                        return function () {
+                            currentResponseElement.textContent += text.charAt(i); // Add the character to the response
+
+                            // Check if the typing effect is complete
+                            if (i === text.length - 1) {
+                                // Activate the copy functionality once typing effect is complete
+                                activateCopyFunctionality(currentResponseElement);
+                            }
+                            scrollToBottom();
+                        };
+                    }(i), i * 50); // Adjust the delay as needed
+                }
+            } else {
+                // For previous responses, activate copy functionality directly
+                activateCopyFunctionality(currentResponseElement);
+            }
+        });
+    }
+
+    // Call the function to activate typing effect for the current response
+    activateTypingEffectForCurrentResponse();
+
+
+
+    function scrollToBottom() {
+        var chatContainer = document.getElementById('chatting');
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        // chatContainer.scrollIntoView(true);
+        // chatContainer.scrollTop + chatContainer.clientHeight === chatContainer.scrollHeight;
+}
+
+        
+    
+    // Call the scrollToBottom function when the page loads
+    window.onload = scrollToBottom;
+
+
+    // Function to activate copy functionality for the current response
+    function activateCopyFunctionality(element) {
+        // Get the copy link button within the element
+        var copyLinkButton = element.nextElementSibling;
+        if (copyLinkButton) {
+            // Show the copy link button
+            copyLinkButton.style.display = 'inline';
+
+            // Add event listener to the copy link button
+            copyLinkButton.addEventListener('click', function (event) {
+                // Copy the text when the button is clicked
+                var messageText = element.textContent.trim(); // Get the text of the response
+                var url = "{% url 'copy_to_clipboard' %}?ai_response_text=" + encodeURIComponent(messageText);
+
+                fetch(url)
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Copy successful'); // Log success message
+                            copyLinkButton.innerHTML = ' Copied; &#10004;'; // Update link text to indicate copy success
+                        } else {
+                            console.error('Failed to copy:', response.statusText); // Log error message
+                        }
+                    })
+                    .catch(error => console.error('Error:', error)); // Log any fetch errors
+
+                event.preventDefault(); // Prevent default click behavior
+            });
+        
+
+          
+        }
+    }
+var totalCall =0;
+ 
+    //Message send function
+    function sendMessage(){
+
+var q = $("#question").val();
+var uImg = "{% static 'media/avatars/300-1.jpg' %}"
+var rImg = "{% static 'media/avatars/300-25.jpg' %}"
+var docId = '{{document.id }}';
+var doc_name ='{{document.name }}';
+$('#error').html("");
+$('#chatting').append('<div id="user" class="d-flex justify-content-end mb-10 user">'+
+                '<div class="d-flex flex-column align-items-end">'+
+                    '<div class="d-flex align-items-center mb-2">'+
+                        '<div class="me-3">'+
+                            '<a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1"'+
+                                'style="font-size: 16px;">You</a>'+
+                        '</div>'+
+                        
+                        '<div class="symbol symbol-35px symbol-circle">'+
+                            '<img alt="Pic"  src="'+uImg+'" />'+
+                        '</div>'+
+                        
+                    '</div>'+
+                    
+                    '<div class="p-5 rounded ask_ques_result text-gray-900 fw-semibold mw-lg-1000px text-start"'+
+                        'data-kt-element="message-text" style="font-size: 16px;">'+q+'</div>'+
+                    
+                '</div>'+
+               
+            '</div>');
+            $('#chatting').append('<div id="loading_chat" class="d-flex justify-content-start mb-10">' +
+                '<div class="d-flex flex-column align-items-start">' +
+                '<div class="d-flex align-items-center mb-2">' +
+                '<div class="symbol symbol-35px symbol-circle">' +
+                '<img alt="Pic" src="'+rImg+'" />' +
+                '</div>' +
+                '<div class="ms-3">' +
+                '<a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1" style="font-size: 16px;">AI</a>' +
+                '</div>' +
+                '</div>' +
+                '<div class="p-5 rounded reponses_result text-gray-900 fw-semibold mw-lg-1000px text-start" data-kt-element="message-text" style="font-size: 16px;">' +
+                
+                'Wait <span class="typing-effect">..........</span></div>' +
+                '<a href="#" onclick="copyText(this)" class="copy-link" style="display: none;"><i class="bi bi-clipboard"></i></a>' +
+                '</div>' +
+            '</div>');
+
+var objDiv = document.getElementById("chatting");
+objDiv.scrollTop = objDiv.scrollHeight;  
+
+// Make AJAX request          
+$.ajax({
+    type: 'POST',
+    url: '/chat-interface/' + docId +'/',
+    data: {
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        'submit_action': 'submit',
+        'question': $('#question').val(),
+        'thread_id': $('#thread_id').val()
+    },
+    success: function (response) {
+        totalCall = totalCall +1;
+        
+        // Handle successful response
+        $("#loading_chat").remove();
+        //console.log('Response:', response.response_prompt);
+        // Update UI with response data
+        if (response.response_prompt) {
+            var srcDetails ='</br><div class="call_"'+totalCall+'" style="display: hide; margin-top:-20px;float:left; padding-left:15px;">Src: '+doc_name+', Page no: '+response.page_num +' Time Duration: '+ response.response_time
+                +'</div>';
+            // Append AI response to chat interface
+            $('#chatting').append('<div class="new_api_response" class="d-flex justify-content-start mb-10">' +
+                '<div class="d-flex flex-column align-items-start">' +
+                '<div class="d-flex align-items-center mb-2">' +
+                '<div class="symbol symbol-35px symbol-circle">' +
+                '<img alt="Pic" src="'+rImg+'" />' +
+                '</div>' +
+                '<div class="ms-3">' +
+                '<a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1" style="font-size: 16px;">AI</a>' +
+                '</div>' +
+                '</div>' +
+                '<div class="p-5 rounded reponses_result text-gray-900 fw-semibold mw-lg-1000px text-start typing-effect" data-kt-element="message-text" style="font-size: 16px;">' +
+                response.response_prompt + 
+                '</div>' +
+                '<a href="#" onclick="copyText(this)" class="copy-link" style="display: none;padding-left:15px;"><i class="bi bi-clipboard"></i></a>' +
+                '</div><div class="moveLast"></div>' + srcDetails +
+                '<a href="#" onclick="copyText(this)" class="copy-link" style="display: none;padding-left:15px;"><i class="bi bi-clipboard"></i></a>' +
+                '</div><div class="moveLast"></div>' +
+                '</div>');
+
+                            
+            // Scroll to bottom of chat interface
+            var objDiv = document.getElementById("chatting");
+            objDiv.scrollTop = objDiv.scrollHeight;
+             activateTypingEffectForCurrentResponse();
+             $(".call_"+totalCall).show();
+        }
+    },
+   
+    error: function (xhr, status, error) {
+        // Handle error response
+        console.error('Error:', error);
+    }
+    
+});
+
+$("#question").val('');
+
+}
+
+//Tell me button click
+$('.btn_msg_send').on('click', function (e) {        
+var qLen = $('#question').val().split(' ');
+    if(qLen.length>=3){
+        sendMessage();      
+    }  else{
+        $('#error').html('Please enter at least 3 ---------words.')
+    }     
+
+e.preventDefault();
+})
+
+//Clear chat button click
+$('.clear_chat').on('click', function (e) {        
+$.ajax({
+    type: 'POST',
+    url: '/clear_chat/',          
+    data: {
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        'submit_action': 'clear',                
+    }, 
+    success: function (response) {
+        if(response.success == true){
+            $('#chatting').html("");
+            $("#question").focus();
+        }
+    }
+})
+e.preventDefault();
+})
+
+// Enter button press on question
+document.getElementById('question').addEventListener('keypress', function (event) {       
+if (event.keyCode === 13) { // "Enter" key
+    var qLen = $('#question').val().split(' ');
+    if(qLen.length>=3){
+        sendMessage();      
+    }  else{
+        $('#error').html('Please enter at least 3 words.')
+    }   
+    event.preventDefault();
+}
+});
+
+
+var sidebar = document.querySelector('.chat-input');
+var mainContent = document.querySelector('#kt_content_container');
+var iconSvg = document.querySelector('.icon-block-sctm');
+
+// Initially, apply the 'sidebar_small' class to the sidebar and 'main-content_large' class to the main content
+sidebar.classList.add('sidebar_small');
+mainContent.classList.add('main-content_large');
+
+document.querySelector('.icon-block-sctm').onclick = function () {
+    // Toggle the classes
+    sidebar.classList.toggle('sidebar_small');
+    mainContent.classList.toggle('main-content_large');
+    // Rotate the icon
+    iconSvg.style.transform = iconSvg.style.transform === "rotate(180deg)" ? "rotate(0deg)" : "rotate(180deg)";
+};
+function ExportConversation(format) {
+    var conversationMessages = JSON.stringify({{ conversation_messages|safe }}); // Serialize conversation messages to JSON
+
+    fetch(`/Export-conversation/${format}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+        },
+        body: JSON.stringify({ // Pass data to the server
+            format: format,
+            conversation_messages: conversationMessages
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Export failed');
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `conversation.${format}`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        console.error(error);
+        alert('Export failed. Please try again later.');
+    });
+}
+
+
+$(document).on("keypress",'.chatTxtField',function(){
+    if (event.keyCode === 13) { // "Enter" key
+   
+    $(this).closest("form").submit();
+    
+    //use when ajax is implmented
+    //var newTitle = $(this).val();
+    //var chatId =$(this).attr('chatId');    
+    //updateTitle(chatId, newTitle);             
+    
+    //event.preventDefault();
+}
+})
+
+function updateTitle(chatId, newTitle)    {  
+    $.ajax({
+        type: 'POST',
+        url: '/chat_interface/',          
+        data: {
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            'chatID': chatId,                
+            'title' :newTitle,
+            'edit_title':1
+        }, 
+        success: function (response) {
+            if(response.success == true){
+                $('#chatTitle_'+chatId).html(newTitle);
+            }
+        }
+    })
+    e.preventDefault();
+}
+</script>
+{% include 'user/common/footer.html' %}

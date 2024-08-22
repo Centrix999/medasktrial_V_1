@@ -1,0 +1,94 @@
+{% load static %}
+{% load widget_tweaks %}
+{% include 'admin/common/header.html' %}
+{% include 'admin/common/navbar.html' %}
+<!--begin::Toolbar-->
+<div class="toolbar py-5 pb-lg-15" id="kt_toolbar">
+    <!--begin::Container-->
+    <div id="kt_toolbar_container" class="container-xxl d-flex flex-stack flex-wrap">
+        <!--begin::Page title-->
+        <div class="page-title d-flex flex-column me-3">
+            <!--begin::Title-->
+            <h1 class="d-flex text-white fw-bold my-1 fs-3">Delete Document</h1>
+            <!--end::Title-->
+            <!--begin::Breadcrumb-->
+            <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-1">
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">
+                  <a
+                    href="{% url 'admin_dashboard' %}"
+                    class="text-white text-hover-primary"
+                    >Dashboard</a
+                  >
+                </li>
+                <!--end::Item-->
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                </li>
+                <!--begin::Item-->
+                <li class="breadcrumb-item">
+                    <a
+                    href="{% url 'list_doc' %}"
+                    class="text-white text-hover-primary"
+                    >List Document</a
+                  >                 
+                </li>
+                <li class="breadcrumb-item">
+                    <span class="bullet bg-white opacity-75 w-5px h-2px"></span>
+                </li>
+                <!--end::Item-->
+                <!--begin::Item-->
+                <li class="breadcrumb-item text-white opacity-75">Delete Document</li>
+                <!--end::Item-->
+              </ul>
+           
+            <!--end::Breadcrumb-->
+        </div>
+        <!--end::Page title-->
+     
+    </div>
+    <!--end::Container-->
+</div>
+<!--end::Toolbar-->
+<!--begin::Container-->
+<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+    <!--begin::Post-->
+    <div class="content flex-row-fluid" id="kt_content">
+        <!--begin::Card-->
+        <div class="card">
+            <!--begin::Card body-->
+            <div class="card-body p-0">
+                <!--begin::Wrapper-->
+                <div class="card-px text-center py-20 my-10">
+                    <!--begin::Title-->
+                    <h2 class="fs-2x fw-bold mb-10">Are you sure? </h2>
+                    <!--end::Title-->
+                    <!--begin::Description-->
+                    <p class="text-gray-500 fs-4 fw-semibold mb-10">Do you really want to delete <strong> "{{ doc.title }}"? </strong></p>
+                    <!--end::Description-->
+                    <!--begin::Action-->
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                        <a href="{% url 'list_doc' %}" class="btn btn-info">No, Cancel</a>
+                    </form>    
+                    <!--end::Action-->
+                </div>
+                <!--end::Wrapper-->
+                <!--begin::Illustration-->
+                <div class="text-center px-4">
+                    <img class="mw-100 mh-300px" alt="" src="assets/media/illustrations/sigma-1/2.png">
+                </div>
+                <!--end::Illustration-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::Card-->
+        
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Container-->
+
+{% include 'admin/common/footer.html' %}
+

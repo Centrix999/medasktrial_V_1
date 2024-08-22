@@ -1,0 +1,17 @@
+{% load static %} 
+{% load widget_tweaks %} 
+
+<form method="post">
+    {% csrf_token %}
+   
+    <!-- Include the prompt data for editing -->
+    <div class="form-group">
+        <label for="id_prompt_data">Prompt Data:</label>
+        <!-- Render the text area field for editing prompt data -->
+        <textarea id="id_prompt_data" name="prompt_data" class="form-control" placeholder="Enter description up to 150 characters">{{ form.prompt_data.value }}</textarea>
+    </div>
+               
+    <!-- Renders the form fields -->
+    <button type="submit" class="btn btn-primary">Update Prompt</button>
+    
+</form>

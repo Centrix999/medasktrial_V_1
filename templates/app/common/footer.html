@@ -1,0 +1,131 @@
+{% load static %}
+    <!--begin::Footer Section-->
+    <div class="mb-0">
+				
+        <!--begin::Wrapper-->
+        <div class="landing-dark-bg pt-20">
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Row-->
+                <div class="row py-10 py-lg-20">
+                    <!--begin::Col-->
+                    <div class="col-lg-6 pe-lg-16 mb-10 mb-lg-0">
+                        <!--begin::Block-->
+                        <div class="rounded landing-dark-border p-9 mb-10">
+                            <!--begin::Title-->
+                            <h2 class="text-white">Contact Centrix Healthcare for custom Application  </h2>
+                            <!--end::Title-->
+                            <!--begin::Text-->
+                            <span class="fw-normal fs-4 text-gray-700">Email us to 
+                            <a href="contact@centrixhealthcare.com" class="text-white opacity-50 text-hover-primary">contact@centrixhealthcare.com</a></span>
+                            <!--end::Text-->
+                        </div>
+                        <!--end::Block-->
+                        <!--begin::Block-->
+                        
+                        <!--end::Block-->
+                    </div>
+                    <!--end::Col-->
+                    <!--begin::Col-->
+                    <div class="col-lg-6 ps-lg-16">
+                        <!--begin::Navs-->
+                        <div class="d-flex justify-content-center">                           
+                            <!--begin::Links-->
+                            <div class="d-flex fw-semibold flex-column ms-lg-20">
+                                <!--begin::Subtitle-->
+                                <h4 class="fw-bold text-gray-500 mb-6">Stay Connected</h4>
+                                <!--end::Subtitle-->
+                                <!--begin::Link-->
+                                <a href="https://www.facebook.com/" class="mb-6">
+                                    <img src="{% static 'media/svg/brand-logos/facebook-4.svg'%}" class="h-20px me-2" alt="" />
+                                    <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Facebook</span>
+                                </a>
+                                                            
+                                <!--end::Link-->
+                               
+                                <!--begin::Link-->
+                                <a href="https://www.instagram.com/" class="mb-6">
+                                    <img src="{% static 'media/svg/brand-logos/instagram-2-1.svg' %}" class="h-20px me-2" alt="" />
+                                    <span class="text-white opacity-50 text-hover-primary fs-5 mb-6">Instagram</span>
+                                </a>
+                                <!--end::Link-->
+                            </div>
+                            <!--end::Links-->
+                        </div>
+                        <!--end::Navs-->
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Row-->
+            </div>
+            <!--end::Container-->
+            <!--begin::Separator-->
+            <div class="landing-dark-separator"></div>
+            <!--end::Separator-->
+            <!--begin::Container-->
+            <div class="container">
+                <!--begin::Wrapper-->
+                <div class="d-flex flex-column flex-md-row flex-stack py-7 py-lg-10">
+                    <!--begin::Copyright-->
+                    <div class="d-flex align-items-center order-2 order-md-1">
+                        <!--begin::Logo-->
+                        <a href="landing.html">
+                            <img alt="Logo" src="{% static 'media/logos/centrix-white.png'%}" class="h-15px h-md-40px" />
+                        </a>
+                        <!--end::Logo image-->
+                        <!--begin::Logo image-->
+                        <span class="mx-5 fs-6 fw-semibold text-gray-600 pt-1" href="https://centrixhealthcare.com">&copy; 2024 Centrixhealthcare Ltd.</span>
+                        <!--end::Logo image-->
+                    </div>
+                    <!--end::Copyright-->
+                    <!--begin::Menu-->
+                   
+                    <!--end::Menu-->
+                </div>
+                <!--end::Wrapper-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Footer Section-->
+    <!--begin::Scrolltop-->
+    <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+        <i class="ki-duotone ki-arrow-up">
+            <span class="path1"></span>
+            <span class="path2"></span>
+        </i>
+    </div>
+    <!--end::Scrolltop-->
+</div>
+<!--end::Root-->
+<!--end::Main-->
+<!--begin::Scrolltop-->
+<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+    <i class="ki-duotone ki-arrow-up">
+        <span class="path1"></span>
+        <span class="path2"></span>
+    </i>
+</div>
+<!--end::Scrolltop-->
+<!--begin::Javascript-->
+
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="{% static 'plugins/global/plugins.bundle.js' %}"></script>
+<script  src="{% static 'js/scripts.bundle.js' %}"></script>
+<!--end::Global Javascript Bundle-->
+<!--begin::Vendors Javascript(used for this page only)-->
+<script src="{% static 'plugins/custom/fslightbox/fslightbox.bundle.js' %}"></script>
+<script src="{% static 'plugins/custom/typedjs/typedjs.bundle.js' %}"></script>
+<!--end::Vendors Javascript-->
+<!--begin::Custom Javascript(used for this page only)-->
+<script src="{% static 'js/custom/landing.js' %}"></script>
+<script src="{% static 'js/custom/pages/pricing/general.js' %}"></script>
+<script>
+    $(document).on("click",'.logout_btn,.login_btn,.signup_btn',function(){
+            document.getElementById('loader-container').style.display = 'flex';
+    })
+</script>
+</body>
+<!--end::Body-->
+</html>

@@ -1,0 +1,285 @@
+{% load static %}
+{% load widget_tweaks %}
+{% include 'user/common/chatheader.html' %}
+    {% include 'user/common/chatheader.html' %}
+    <div class="main-wrapper-flex">
+        <div id="kt_content_container" style="width:100%" class="">
+            <div class="content container flex-row-fluid" id="kt_content">
+                <div class="chat-block">
+                    <div class="flx-bxgrid container">
+                        <a href="{% url 'user_dashboard' %}"><i class="bi bi-house-door-fill"></i></a>
+                        <div class="wrapper-block">
+                            <div class="dropdown">
+                                <div class="chatgpt-block">
+                                    <p class="dropbtn text-gray-900" id="myBtn"> Common Chat Box</p>
+                                </div>
+                            </div> 
+                        </div>
+                        <!-- start the export chart -->
+                        <div class="wrapper-block">
+                        
+                            <div class="dropdown">
+                                <div class="chatgpt-block">
+                                    <b>
+                                    <p class="dropbtn text-gray-900" id="myBtn"></p>
+                                   
+                                    {% if document.name|length > 15 %}
+                                        {{ document.name|slice:":15" }}...
+                                    {% else %}
+                                        {{ document.name }}
+                                    {% endif %}
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="mb-2" data-bs-toggle="modal" data-bs-target="#shareModal" class="share-button" style="cursor:pointer">
+                            <i class="fa-solid fa-share"></i>
+                        </div>                   
+    
+                            
+                        <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="shareDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Export Chat
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="shareDropdown">
+                            <li><a href="{% url 'common_export_conversation_doc' %}" class="dropdown-item">Export to DOC</a></li>
+                            <li><a href="{% url 'common_export_conversation_pdf' %}" class="dropdown-item">Export to PDF</a></li>
+                            <li><a href="{% url 'common_export_conversation_ppt' %}" class="dropdown-item">Export to PPT</a></li>
+                            <li><a href="{% url 'common_export_conversation_json' %}" class="dropdown-item">Export to JSON</a></li>
+                            <li><a href="{% url 'common_export_conversation_audio' %}" class="dropdown-item">Export to Audio</a></li>
+
+                            
+                        </ul>
+                    </div>
+                        
+                        <!--end::Title-->
+                    </div>
+    
+                </div>
+                 
+                <!--end::Title-->
+    
+    
+            </div>
+            <!-- end of the export chat -->
+
+            <!--begin::Messenger-->
+
+            <div class="card" id="kt_chat_messenger">
+                <div class="card-body" id="kt_chat_messenger_body" style="min-height: 74vh; border-top:1px solid #9e9ea761">
+                    <div class="loader-container" id="loader-container">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" id="chatting" data-kt-element="messages"
+                         data-kt-scroll="true" data-kt-scroll-activate="{default: true, lg: true, md:true}"
+                         data-kt-scroll-max-height="auto" data-kt-scroll-offset="5px" style="height:470px !important">
+                        {% for message in common_conversation_messages %}
+                        <div class="d-flex justify-content-start mb-10 message-container">
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="d-flex align-items-center mb-2">
+                                    <div class="symbol symbol-35px symbol-circle">
+                                        <img alt="Pic" src="{% static 'media/avatars/300-25.jpg' %}" />
+                                    </div>
+                                    <div class="ms-3">
+                                        <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1" style="font-size: 16px;">AI</a>
+                                    </div>
+                                </div>
+                                <div class="p-5 rounded reponses_result text-gray-900 fw-semibold mw-lg-1000px text-start typing-effect" data-kt-element="message-text" style="font-size: 16px;">{{ message.content }}</div>
+                                <a href="#" onclick="copyText(this)" class="copy-link" style="display: none;"><i class="bi bi-clipboard"></i> Copy</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer pt-4 container" id="kt_chat_messenger_footer">
+                    <form method="POST" action="" id="message-form">
+                        {% csrf_token %}
+                        <div class="text-input">
+                            <button style="height:52px" type="submit" name="submit_action" value="clear" class="btn btn_send clear_chat">Clear Chat</button>
+                            <div class="text-area-wrapper">
+                                <textarea class="form-control resize-ta" data-kt-element="input" id="question" name="question" placeholder="Enter your question"></textarea>
+                            </div>
+                            <button style="height:52px" class="btn btn_send btn_msg_send" id="submit" type="submit" name="submit_action" value="submit">
+                                Ask me!
+                            </button>
+                            <span id="error" style="color:red"></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function sendMessage() {
+            var q = $("#question").val();
+            var uImg = "{% static 'media/avatars/300-1.jpg' %}";
+            var rImg = "{% static 'media/avatars/300-25.jpg' %}";
+
+            $('#error').html("");
+            $('#chatting').append('<div id="user" class="d-flex justify-content-end mb-10 user message-container">' +
+                '<div class="d-flex flex-column align-items-end">' +
+                '<div class="d-flex align-items-center mb-2">' +
+                '<div class="me-3">' +
+                '<a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary ms-1" style="font-size: 16px;">You</a>' +
+                '</div>' +
+                '<div class="symbol symbol-35px symbol-circle">' +
+                '<img alt="Pic" src="' + uImg + '" />' +
+                '</div>' +
+                '</div>' +
+                '<div class="p-5 rounded ask_ques_result text-gray-900 fw-semibold mw-lg-1000px text-start" data-kt-element="message-text" style="font-size: 16px;">' + q + '</div>' +
+                '</div>' +
+                '</div>');
+
+            $("#question").val('');
+            $('.clear_chat').css("display", "flex");
+            $("#loader-container").show();
+            $('#submit').attr('disabled', true);
+
+            var formData = {
+                'question': q,
+                'submit_action': 'submit',
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "common_chat_interface" %}',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    $("#loader-container").hide();
+                    $('#submit').attr('disabled', false);
+
+                    response.response_texts.forEach(function(resp, index) {
+                        var documentName = response.document_titles[index];
+                        var duration = response.durations[index];
+                        var pageNumbers = response.page_numbers_list[index];
+
+                        $('#chatting').append(
+                            '<div class="d-flex justify-content-start mb-10 message-container">' +
+                            '<div class="d-flex flex-column align-items-start">' +
+                            '<div class="d-flex align-items-center mb-2">' +
+                            '<div class="symbol symbol-35px symbol-circle">' +
+                            '<img alt="Pic" src="' + rImg + '" />' +
+                            '</div>' +
+                            '<div class="ms-3">' +
+                            '<a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary me-1" style="font-size: 16px;">AI</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="p-5 rounded reponses_result text-gray-900 fw-semibold mw-lg-1000px text-start typing-effect" data-kt-element="message-text" style="font-size: 16px;">' +
+                            resp + ' (Source: ' + documentName + ', Duration: ' + duration + ', Pages: ' + pageNumbers.join(', ') + ')' +
+                            '</div>' +
+                            '<a href="#" onclick="copyText(this)" class="copy-link" style="display: none;"><i class="bi bi-clipboard"></i> Copy</a>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    });
+
+                    activateTypingEffectForCurrentResponse();
+                    scrollToBottom();
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    $("#loader-container").hide();
+                    $('#submit').attr('disabled', false);
+                    $('#error').html("An error occurred while generating the response. Please try again.");
+                }
+            });
+        }
+
+        $('#message-form').on('submit', function(event) {
+            event.preventDefault();
+            sendMessage();
+        });
+
+        $('.clear_chat').on('click', function (e) {
+            $.ajax({
+                type: 'POST',
+                url: '/clear_chat/',
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'submit_action': 'clear',
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        $('#chatting').html("");
+                        $("#question").focus();
+                    }
+                }
+            })
+            e.preventDefault();
+        });
+
+        document.getElementById('question').addEventListener('keypress', function (event) {
+            if (event.keyCode === 13) {
+                var qLen = $('#question').val().split(' ');
+                if (qLen.length >= 3) {
+                    sendMessage();
+                } else {
+                    $('#error').html('Please enter at least 3 words.')
+                }
+                event.preventDefault();
+            }
+        });
+
+        function activateTypingEffectForCurrentResponse() {
+            var responseElements = document.querySelectorAll('.typing-effect');
+
+            responseElements.forEach(function (currentResponseElement, index) {
+                if (index === responseElements.length - 1) {
+                    currentResponseElement.classList.add('typing-effect-active');
+
+                    var text = currentResponseElement.textContent.trim();
+                    currentResponseElement.textContent = '';
+
+                    for (var i = 0; i < text.length; i++) {
+                        setTimeout(function (i) {
+                            return function () {
+                                currentResponseElement.textContent += text.charAt(i);
+
+                                if (i === text.length - 1) {
+                                    activateCopyFunctionality(currentResponseElement);
+                                }
+                                scrollToBottom();
+                            };
+                        }(i), i * 50);
+                    }
+                } else {
+                    activateCopyFunctionality(currentResponseElement);
+                }
+            });
+        }
+
+        function scrollToBottom() {
+            var chatContainer = document.getElementById('chatting');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function activateCopyFunctionality(element) {
+            var copyLinkButton = element.nextElementSibling;
+            if (copyLinkButton) {
+                copyLinkButton.style.display = 'inline';
+
+                copyLinkButton.addEventListener('click', function (event) {
+                    var messageText = element.textContent.trim();
+                    var url = "{% url 'copy_to_clipboard' %}?ai_response_text=" + encodeURIComponent(messageText);
+
+                    fetch(url)
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Copy successful');
+                                copyLinkButton.innerHTML = ' Copied; &#10004;';
+                            } else {
+                                console.error('Failed to copy:', response.statusText);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+
+                    event.preventDefault();
+                });
+            }
+        }
+
+        window.onload = scrollToBottom;
+    </script>

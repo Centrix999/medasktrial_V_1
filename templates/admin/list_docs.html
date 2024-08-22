@@ -1,0 +1,29 @@
+{% load static %}
+{% load widget_tweaks %}
+{% include 'admin/common/header.html' %}
+{% include 'admin/common/navbar.html' %}
+
+<!--begin::Container-->
+<div id="kt_content_container" class="d-flex flex-column-fluid align-items-start container-xxl">
+    <!--begin::Post-->
+  
+    <div class="content flex-row-fluid" id="kt_content">
+        <div class="page-title d-flex flex-column me-3 mb-5">
+            <!--begin::Title-->
+            <h1 class="d-flex text-white fw-bold my-1 fs-3 mb-5">List Document</h1>
+            <!--end::Title-->
+          </div>
+        <!--begin::Row-->
+        <div class="row g-5 g-xl-8">          
+         
+            <!--begin::Col-->
+            {% include 'admin/common/doc_listing.html' %}
+            <!--end::Col-->
+        </div>
+        <!--end::Row-->
+      
+    </div>
+    <!--end::Post-->
+</div>
+<!--end::Container-->
+{% include 'admin/common/footer.html' %}

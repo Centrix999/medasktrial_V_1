@@ -1,0 +1,128 @@
+{% load static %}
+<!--begin::Wrapper-->
+<div class="d-flex align-items-center justify-content-between">
+  <!--begin::Logo-->
+  <div class="d-flex align-items-center flex-equal">
+    <!--begin::Mobile menu toggle-->
+    <button
+      class="btn btn-icon btn-active-color-primary me-3 d-flex d-lg-none"
+      id="kt_landing_menu_toggle"
+    >
+      <i class="ki-duotone ki-abstract-14 fs-2hx">
+        <span class="path1"></span>
+        <span class="path2"></span>
+      </i>
+    </button>
+    <!--end::Mobile menu toggle-->
+    <!--begin::Logo image-->
+    <a href="/">
+      <img
+        alt="Logo"
+        src="{% static 'media/logos/centrix-white.png' %}"
+        class="logo-default h-25px h-lg-80px"
+      />
+      <img
+        alt="Logo"
+        src="{% static 'media/logos/centrix.png' %}"
+        class="logo-sticky h-20px h-lg-40px"
+      />
+    </a>
+    <!--end::Logo image-->
+  </div>
+  <!--end::Logo-->
+  <!--begin::Menu wrapper-->
+  <div class="d-lg-block" id="kt_header_nav_wrapper">
+    <div
+      class="d-lg-block p-5 p-lg-0"
+      data-kt-drawer="true"
+      data-kt-drawer-name="landing-menu"
+      data-kt-drawer-activate="{default: true, lg: false}"
+      data-kt-drawer-overlay="true"
+      data-kt-drawer-width="200px"
+      data-kt-drawer-direction="start"
+      data-kt-drawer-toggle="#kt_landing_menu_toggle"
+      data-kt-swapper="true"
+      data-kt-swapper-mode="prepend"
+      data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav_wrapper'}"
+    >
+      <!--begin::Menu-->
+      <div
+        class="menu menu-column flex-nowrap menu-rounded menu-lg-row menu-title-gray-600 menu-state-title-primary nav nav-flush fs-5 fw-semibold"
+        id="kt_landing_menu"
+      >
+        <!--begin::Menu item-->
+        <div class="menu-item">
+          <!--begin::Menu link-->
+          <a
+            class="menu-link nav-link active py-3 px-4 px-xxl-6"
+            href="{% url 'home' %}"           
+            >Home</a
+          >
+          <!--end::Menu link-->
+        </div>
+        <!--end::Menu item-->
+        <!--begin::Menu item-->
+        
+        <div class="menu-item">
+          <!--begin::Menu link-->
+          <a
+            class="menu-link active nav-link py-3 px-4 px-xxl-6"
+            href="/#how-it-works"          
+            >How it Works
+          </a>
+          <!--end::Menu link-->
+        </div>
+        {% if user.is_authenticated %} 
+           {% if user.is_staff %}
+        <div class="menu-item active">
+          <!--begin::Menu link-->
+          <a
+            class="menu-link active nav-link py-3 px-4 px-xxl-6"
+            href="{% url 'admin_dashboard' %}"            
+            >Dashboard
+          </a>
+          
+          <!--end::Menu link-->
+        </div>
+        {% else %}
+
+        <div class="menu-item active">
+          <!--begin::Menu link-->
+          <a
+            class="menu-link active nav-link py-3 px-4 px-xxl-6"
+            href="{% url 'user_dashboard' %}"
+           
+            >Dashboard</a
+          >
+          <!--end::Menu link-->
+        </div>
+        {% endif %}
+        {% endif %}
+        
+        
+        <!--end::Menu item-->
+      </div>
+      <!--end::Menu-->
+    </div>
+  </div>
+  <!--end::Menu wrapper-->
+  <!--begin::Toolbar-->
+  {% if user.is_authenticated %}    
+  <div class="flex-equal text-end ms-1">
+    <form action="{% url 'logout' %}" method="post" class="nav-link">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-link logout_btn" >Logout</button>
+     </form>
+  </div>  
+  {% else %}
+  <div class="flex-equal text-end ms-1 ml-50">
+    <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+  </div>
+  <div class="flex-equal ms-1">
+    <a href="{% url 'signup' %}" class="btn btn-success">Sign Up</a>
+  </div>  
+  {% endif %}
+
+  <!--end::Toolbar-->
+</div>
+<!--end::Wrapper-->

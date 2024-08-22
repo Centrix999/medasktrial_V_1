@@ -1,0 +1,33 @@
+{% load static %}
+<div class="footer" id="kt_footer">
+  
+</div>
+
+
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="{% static 'plugins/global/plugins.bundle.js' %}"></script>
+<script src="{% static 'js/scripts.bundle.js' %}"></script>
+<script src="{% static 'js/jquery.block.js' %}"></script>
+<!--end::Global Javascript Bundle-->
+<!--end::Vendors Javascript-->
+<!--begin::Custom Javascript(used for this page only)-->
+<script src="{% static 'js/widgets.bundle.js' %}"></script>
+<script src="{% static 'js/custom/apps/chat/chat.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js" integrity="sha512-eYSzo+20ajZMRsjxB6L7eyqo5kuXuS2+wEbbOkpaur+sA2shQameiJiWEzCIDwJqaB0a4a6tCuEvCOBHUg3Skg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!--end::Custom Javascript-->
+<script>
+    function redirectToDashboard() { 
+        window.location.href = "{% url 'admin_dashboard' %}";
+        } 
+        function redirectToNewUpload() { 
+        window.location.href = "{% url 'admin_new_upload' %}";
+        } 
+        function redirectToViewUpload() {
+            window.location.href = "{% url 'list_doc' %}";
+        }       
+        
+</script>
+<!--end::Javascript-->
+</body>
+<!--end::Body-->
+</html>

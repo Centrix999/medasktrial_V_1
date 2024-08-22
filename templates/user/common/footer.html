@@ -1,0 +1,52 @@
+{% load static %}
+<div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+
+</div>
+<!--end::Footer-->
+</div>
+<!--end::Wrapper-->
+</div>
+<!--end::Page-->
+</div>
+<!--end::Root-->
+</div>
+<!--end::Content-->
+</div>
+<!--end::Body-->
+
+</div>
+</div>
+<!--end::Activities drawer-->
+
+<!--end::Main-->
+<!--begin::Scrolltop-->
+<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+<i class="ki-duotone ki-arrow-up">
+<span class="path1"></span>
+<span class="path2"></span>
+</i>
+</div>
+<!--end::Scrolltop-->
+<!--begin::Javascript-->
+<script>var hostUrl = "{% static ''%}";</script>
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="{% static 'plugins/global/plugins.bundle.js' %}"></script>
+<script src="{% static 'js/scripts.bundle.js' %}"></script>
+<script src="{% static 'js/jquery.block.js' %}"></script>
+<!--end::Global Javascript Bundle-->
+<!--end::Vendors Javascript-->
+<!--begin::Custom Javascript(used for this page only)-->
+<script src="{% static 'js/widgets.bundle.js' %}"></script>
+<script src="{% static 'js/custom/apps/chat/chat.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js" integrity="sha512-eYSzo+20ajZMRsjxB6L7eyqo5kuXuS2+wEbbOkpaur+sA2shQameiJiWEzCIDwJqaB0a4a6tCuEvCOBHUg3Skg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!--end::Custom Javascript-->
+<script>
+  
+   function redirectToDashboard() { 
+        window.location.href = "{% url 'user_dashboard' %}";
+        } 
+</script>
+<!--end::Javascript-->
+</body>
+<!--end::Body-->
+</html>
