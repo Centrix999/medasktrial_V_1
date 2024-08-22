@@ -25,11 +25,11 @@ SECRET_KEY = 'django-insecure-@s#i9(yubi2*bxs^))1ig*9nf2xxj@e7zeo@le)mjmavmn+i9$
 
 
 
-# ALLOWED_HOSTS = ['3.110.51.140','medasktrial.cardiovalens.com']
+ALLOWED_HOSTS = ['3.110.51.140','medasktrial.cardiovalens.com']
 
 
-ALLOWED_HOSTS = ['*']
-# CSRF_TRUSTED_ORIGINS = ['http://3.110.51.140:8000/','https://medasktrial.cardiovalens.com/']
+# ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['http://3.110.51.140:8000/','https://medasktrial.cardiovalens.com/']
 
 
 # Application definition
@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'tell_me_pdf.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "shammi_db_1",#database
-        "USER": "shammi",
-        "PASSWORD": "shammi@1",# password of database
-        "HOST": "127.0.0.1",#3.110.51.140
+        "NAME": "",#database centrix_db_001
+        "USER": "",
+        "PASSWORD": "",# password of database
+        "HOST": "",#3.110.51.140
         "PORT": "5432",
     }
 }
